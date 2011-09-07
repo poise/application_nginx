@@ -26,6 +26,12 @@ action :before_compile do
 
   new_resource.application_server_role "#{new_resource.application.name}_application_server" unless new_resource.application_server_role
 
+  static_files = new_resource.static_files.inject({}) do |files, (url, path)|
+    files[url] = ::File.expand_path(path, ::File.join(new_resource.application.path, "current"))
+    files
+  end
+  new_resource.static_files static_files
+
 end
 
 action :before_deploy do
