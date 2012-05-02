@@ -36,7 +36,7 @@ end
 
 action :before_deploy do
 
-  template "#{node[:nginx][:dir]}/sites-available/#{new_resource.application.name}.conf" do
+  template "#{node['nginx']['dir']}/sites-available/#{new_resource.application.name}.conf" do
     source new_resource.template ? new_resource.template : "load_balancer.conf.erb"
     cookbook new_resource.template ? new_resource.cookbook_name : "application_nginx"
     owner "root"
