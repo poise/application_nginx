@@ -35,6 +35,9 @@ Note that the application repository will still be checked out even if this is t
 - port: the port nginx will bind. Defaults to 80
 - application_port: the port the application server runs on. Defaults to 8000
 - static_files: a Hash mapping URLs to files. Defaults to an empty Hash
+- ssl: true/false that we should use SSL
+- ssl_certificate: The SSL public certificate full path file name, defaults to #{node.fqdn}.cert if ssl true, append any chained CA certificates to the end of this file.
+- ssl_certificate_key: The SSL private certificate full path file name, defaults to #{node.fqdn}.key if ssl true
 
 Usage
 =====
