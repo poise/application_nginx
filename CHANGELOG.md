@@ -1,3 +1,9 @@
+## v1.0.4:
+
+### Bug
+
+- [COOK-2402]: cookbook attribute expects argument to be a string
+
 ## v1.0.2:
 
 * [COOK-1590] - add ssl support
