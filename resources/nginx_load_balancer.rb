@@ -25,6 +25,7 @@ attribute :template, :kind_of => [String, NilClass], :default => nil
 attribute :server_name, :kind_of => [String, Array], :default => node['fqdn']
 attribute :port, :kind_of => Integer, :default => 80
 attribute :application_port, :kind_of => Integer, :default => 8000
+attribute :application_socket, :kind_of => [Array, String, NilClass], :default => nil
 attribute :static_files, :kind_of => Hash, :default => {}
 attribute :ssl, :kind_of => [ TrueClass, FalseClass ], :default => false
 attribute :ssl_certificate, :kind_of => String, :default => "#{node['fqdn']}.crt"

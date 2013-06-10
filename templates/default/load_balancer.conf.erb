@@ -1,4 +1,9 @@
 upstream <%= @resource.application.name %> {
+  <% unless @application_socket.empty? -%>
+    <% @application_socket.each do |socket_name| -%>
+  server unix:<%= socket_name %>;
+    <% end -%>
+  <% end -%>
   <% @hosts.each do |node| %>
   server <%= node.attribute?('cloud') ? node['cloud']['local_ipv4'] : node['ipaddress'] %>:<%= @resource.application_port %>;
   <% end %>
