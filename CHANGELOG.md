@@ -1,3 +1,10 @@
+## v1.1.0:
+
+### Improvement
+
+- [COOK-2579]: `application_nginx` cookbook should accept
+  "`application_port`" as string for unix sockets
+
 ## v1.0.4:
 
 ### Bug
