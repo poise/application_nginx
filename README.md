@@ -102,6 +102,17 @@ which will be expanded to:
       }
     }
 
+Chef Solo Support
+-----------------
+
+This cookbook relies on roles to find backend application servers. This may not be desireable in a simplified chef solo deployment. You must manually specify backend application servers by providing a list of nodes.
+
+For example, reverse proxying to applications on the current node:
+
+    nginx_load_balancer do
+      hosts [node]
+    end
+
 License and Author
 ==================
 

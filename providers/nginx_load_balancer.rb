@@ -42,8 +42,14 @@ action :before_deploy do
     owner "root"
     group "root"
     mode "644"
+
+    hosts = if(Chef::Config[:solo])
+      new_resource.hosts
+    else
+      new_resource.find_matching_role(new_resource.application_server_role, false)
+    end
     variables(:resource => new_resource,
-              :hosts => new_resource.find_matching_role(new_resource.application_server_role, false),
+              :hosts => hosts,
               :application_socket => Array(new_resource.application_socket)
              )
     notifies :reload, resources(:service => 'nginx')
