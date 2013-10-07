@@ -1,13 +1,12 @@
-Description
-===========
-
+application_nginx Cookbook
+==========================
 This cookbook is designed to be able to deploy and configure an nginx reverse proxy in front of one or more application servers, which are also managed with the `application` cookbook.
 
 Note that this cookbook provides the nginx-specific bindings for the `application` cookbook; you will find general documentation in that cookbook.
 
-Requirements
-============
 
+Requirements
+------------
 Chef 0.10.0 or higher required (for Chef environment use).
 
 The following Opscode cookbooks are dependencies:
@@ -15,19 +14,17 @@ The following Opscode cookbooks are dependencies:
 * application
 * nginx
 
-Resources/Providers
-==========
 
+Resources/Providers
+-------------------
 The LWRP provided by this cookbook is not meant to be used by itself; make sure you are familiar with the `application` cookbook before proceeding.
 
-nginx\_load\_balancer
----------------------
-
+### nginx_load_balancer
 The `nginx_load_balancer` sub-resource LWRP installs and configures nginx with an upstream for the given application; the upstream will point to all the nodes returned by a search for a specific role.
 
 Note that the application repository will still be checked out even if this is the only sub-resource applied to a node. This is useful for instance to serve static files directly from the load balancer.
 
-# Attribute Parameters
+##### Attribute Parameters
 
 - application\_server\_role: the role to search for when looking for application servers. Defaults to "#{application name}\_application\_server"
 - template: the name of template that will be rendered to create the context file; if specified it will be looked up in the application cookbook. Defaults to "load_balancer.conf.erb" from this cookbook
@@ -39,9 +36,9 @@ Note that the application repository will still be checked out even if this is t
 - ssl_certificate: The SSL public certificate full path file name, defaults to #{node.fqdn}.cert if ssl true, append any chained CA certificates to the end of this file.
 - ssl_certificate_key: The SSL private certificate full path file name, defaults to #{node.fqdn}.key if ssl true
 
-Usage
-=====
 
+Usage
+-----
 A sample application that needs a database connection:
 
     application "my-app" do
@@ -102,15 +99,15 @@ which will be expanded to:
       }
     }
 
-License and Author
-==================
+License & Authors
+-----------------
+- Author:: Adam Jacob (<adam@opscode.com>)
+- Author:: Andrea Campi (<andrea.campi@zephirworks.com>)
+- Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Seth Chisamore (<schisamo@opscode.com>)
 
-Author:: Adam Jacob (<adam@opscode.com>)
-Author:: Andrea Campi (<andrea.campi@zephirworks.com.com>)
-Author:: Joshua Timberman (<joshua@opscode.com>)
-Author:: Seth Chisamore (<schisamo@opscode.com>)
-
-Copyright 2009-2012, Opscode, Inc.
+```text
+Copyright 2009-2013, Opscode, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -123,3 +120,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
