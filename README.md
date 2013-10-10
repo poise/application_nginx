@@ -29,6 +29,7 @@ Note that the application repository will still be checked out even if this is t
 - application\_server\_role: the role to search for when looking for application servers. Defaults to "#{application name}\_application\_server"
 - template: the name of template that will be rendered to create the context file; if specified it will be looked up in the application cookbook. Defaults to "load_balancer.conf.erb" from this cookbook
 - server\_name: the virtual host name(s). Defaults to the node FQDN
+- set\_host\_header: Force nginx to set the Host, X-Real-IP and X-Forwarded-For headers. Defaults to false.
 - port: the port nginx will bind. Defaults to 80
 - application_port: the port the application server runs on. Defaults to 8000
 - static_files: a Hash mapping URLs to files. Defaults to an empty Hash
@@ -96,6 +97,32 @@ which will be expanded to:
 
       location / {
         proxy_pass http://my-app;
+      }
+    }
+
+Additionally you can set `set_host_header` to true to force Nginx to pass along the Host, X-Real-IP and X-Forwarded-For headers which are often vital to the correct functioning of OAuth callbacks and similar. See [the nginx docs](http://wiki.nginx.org/HttpProxyModule#proxy_set_header) for more details
+
+    application "my-app" do
+      path "/usr/local/my-app"
+      repository "..."
+      revision "..."
+
+      nginx_load_balancer do
+        only_if { node['roles'].include?('my-app_load_balancer') }
+        set_host_header true
+      end
+    end
+
+    which will result in the following server definition:
+
+    server {
+      listen 80;
+      server_name frontend-0;
+      location / {
+        proxy_pass http://my-app;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
       }
     }
 
