@@ -2,6 +2,12 @@ application_nginx Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the application_nginx cookbook.
 
+v2.0.2
+------
+### Improvement
+- [COOK-2730] - pass along reasonable Host, X-Forwarded-For & X-Real-IP
+
+
 v2.0.0
 ------
 - [COOK-3306]: Multiple Memory Leaks in Application Cookbook
