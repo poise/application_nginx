@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include Chef::Mixin::LanguageIncludeRecipe
+include Chef::DSL::Recipe
 
 action :before_compile do
 
