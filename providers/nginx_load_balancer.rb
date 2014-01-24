@@ -43,7 +43,7 @@ action :before_deploy do
     group "root"
     mode "644"
     variables(:resource => new_resource,
-              :hosts => new_resource.find_matching_role(new_resource.application_server_role, false),
+              :hosts => process_hosts(new_resource.hosts || new_resource.find_matching_role(new_resource.application_server_role, false)),
               :application_socket => Array(new_resource.application_socket)
              )
     notifies :reload, resources(:service => 'nginx')
@@ -69,3 +69,17 @@ end
 action :after_restart do
 end
 
+
+protected
+
+def process_hosts(nodes)
+  nodes.map do |n|
+    if n.is_a?(String)
+      n
+    elsif n.attribute?('cloud')
+      n['cloud']['local_ipv4']
+    else
+      n['ipaddress']
+    end
+  end
+end

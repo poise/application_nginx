@@ -20,6 +20,7 @@
 
 include ApplicationCookbook::ResourceBase
 
+attribute :hosts, :kind_of => [Array, NilClass], :default => nil
 attribute :application_server_role, :kind_of => [String, Symbol, NilClass], :default => nil
 attribute :template, :kind_of => [String, NilClass], :default => nil
 attribute :server_name, :kind_of => [String, Array], :default => node['fqdn']
