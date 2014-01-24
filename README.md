@@ -27,6 +27,7 @@ Note that the application repository will still be checked out even if this is t
 ##### Attribute Parameters
 
 - application\_server\_role: the role to search for when looking for application servers. Defaults to "#{application name}\_application\_server"
+- hosts: the set of hosts at which to point the load balancer. This overrides the `application_server_role` parameter to allow search-free static definition as an Array of strings (IP or hostname).
 - template: the name of template that will be rendered to create the context file; if specified it will be looked up in the application cookbook. Defaults to "load_balancer.conf.erb" from this cookbook
 - server\_name: the virtual host name(s). Defaults to the node FQDN
 - set\_host\_header: Force nginx to set the Host, X-Real-IP and X-Forwarded-For headers. Defaults to false.
@@ -124,6 +125,24 @@ Additionally you can set `set_host_header` to true to force Nginx to pass along 
         proxy_set_header   X-Real-IP        $remote_addr;
         proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
       }
+    }
+
+In cases where search functionality is not available (chef-solo) or static mapping of backend hosts is required (test deployments such as test-kitchen), you can use the `hosts` parameter to statically specify the backend hosts:
+
+    application "my-app" do
+      path "/usr/local/my-app"
+      repository "..."
+      revision "..."
+
+      nginx_load_balancer do
+        hosts ['foo.bar.com']
+      end
+    end
+
+    which will result in the following upstream definition:
+
+    upstream my-app {
+      server foo.bar.com:8000;
     }
 
 License & Authors
