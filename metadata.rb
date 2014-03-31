@@ -7,4 +7,4 @@ long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "2.0.3"
 
 depends "application", "~> 4.0"
-depends "nginx"
+depends "nginx", "~> 2.4.4"
