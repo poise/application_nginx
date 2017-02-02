@@ -69,9 +69,6 @@ end
 action :after_restart do
 end
 
-
-protected
-
 def process_hosts(nodes)
   nodes.map do |n|
     if n.is_a?(String)
